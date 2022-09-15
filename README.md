@@ -8,7 +8,7 @@ To create a V2 of the [itinerary highlights (V1)](https://github.com/kimkimtrave
 1.  As an `admin-user`, I want to be able to **CRUD** predefined highlights to any given `Hotel`, `Itinerary`, or `Activity` (with potential extendability to other objects in the future).
 2. As an `admin-user`, I want to be able to select from a list of predefined highlights (created above) for any given `Hotel`, `Itinerary`, or `Activity`, and 
 3. As a `travel-user`, I want to be able to view given highlights that my admin-user has selected/created on the activities. Render only if there are 3-5 highlights for a given `TravelPlan`, inclusively.
-4. (Nice to have) For the 
+4. (Nice to have) Create endpoint to return matching `predefined_highlight.type` with `user.list_of_likable_types`
 
 
 ## Implementation
