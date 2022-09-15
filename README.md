@@ -19,61 +19,71 @@ For this spec, the following will not be considered (but we can discuss);
 - Authorization of resources for given user types (gems `cancancan`, `pundit`)
 
 
-1. CRUD for Highlights
+1. **CRUD** for `PredefinedHighlight`, responsible for creating custom highligths for a given `Hotel`, `Activity`, or `Location`.
+- 
+  ```
+  POST {base_url}/predefined_highlights
+  ```
  
-Description: Responsible for creating custom highligths for a given `Hotel`, `Activity`, or `Location`.
-```
-POST {base_url}/custom_highlights
-```
-`uri params`
-- type
-- id 
 
-Description: Responsible for editing custom highligths for a given `Hotel`, `Activity`, or `Location`.
-```
-PUT {base_url}/custom_highlights
-```
-`uri params`
+  
+-
+   ```
+   GET {base_url}/predefined_highlights
+   ```
+   `query params`
+   - type
+   - id
+   
+- 
+   ```
+   PUT {base_url}/predefined_highlights
+   ```
+   
+   `uri params`
 
-Description: Responsible for deleting custom highligths for a given `Hotel`, `Activity`, or `Location`.
-```
-DELETE {base_url}/custom_highlights
-```
-`uri params`
-
-Description: Show custom hightligts for a given 
-```
-GET {base_url}/trip_plan/:id/custom_highlights
-```
-
-```json
-{
-  id: int
-  highlight_text: string,
-  type: string
-},{}
-```
+-
+   ```
+   DELETE {base_url}/predefined_highlights
+   ```
 
 
+2. Showing predefined highlight(s) for a given trip plans
 
+-
+  ```
+  GET {base_url}/trip_plan/:trip_plan_id/predefined_highlights
+  ```
+  
+-
+  ```
+  GET {base_url}/trip_plan/:id/predefined_highlight/:id
+  ```
 
-Assigning a custom highlight to
-
-
-An endpoint for exposing 3 highlights, the of which match a user profile's likeability concept, and a hilight type
+  ```
+  {
+    id: int
+    highlight_text: string,
+    type: string (maps to enum in model + db)
+  }
+  ```
 
 
 ### Controllers
 
 ```ruby
-def CustomHighlightController
+def PredefinedHighlightsController < ApplicationController
+  # TODO: CRUD scaffolding for custom highlights, to generate the polymorphic association
+end
+```
 
-  # 
-  def create
+```ruby
+def TripPlans::PredefinedHighlights < ApplicationController
+  # TODO: intex & show for predefined highlights for a given trip plan
+  def index
   end
   
-  #
-  def edit
+  def show
   end
 end
 ```
@@ -83,9 +93,8 @@ end
 ### Models
 
 Questions:
-1. Do we need to preserve 
 
-1. Create a model `CustomHighlight` that will map with controller & db, `rails g model CustomHighlight`
+1. Create a model `PredefinedHighlight` that will map with controller & db, `rails g model CustomHighlight`
 
 ```ruby
 class CustomHighlight < ActiveRecord::Base
@@ -99,6 +108,27 @@ end
 ```
 
 ```ruby
+class Hotel < ActiveRecord::Base
+  has_many :predefined_highlights
+...
+end
+```
+
+```ruby
+class Activity < ActiveRecord::Base
+  has_many :predefined_highlights
+...
+end
+```
+
+```ruby
+class Location < ActiveRecord::Base
+  has_many :predefined_highlights
+...
+end
+```
+
+```ruby
 class TripPlan::Highlight < ActiveRecord::Base
   belongs_to :trip_plan
   belongs_to :photo
@@ -107,38 +137,6 @@ class TripPlan::Highlight < ActiveRecord::Base
 ...
 end
 ```
-
-
-### Database & migrations
-
-
-
-
-
-
-### Service Objects
-
-1. On creating a custom 
-
-```ruby
-class UseCase::CreateTripPlanHighLight
-  def initialize()
-  end
-  
-  def call
-    
-  end
-  
-  private
-  
-end
-```
-
-### Deployment/Launch Checklist
-[ ]
-
-
-
 
 
 
